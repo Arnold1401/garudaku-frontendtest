@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Home",
   data() {
@@ -27,6 +29,7 @@ export default {
         { id: 3, title: "Post 3", content: "Content of Post 3" },
         // Add more posts as needed
       ],
+      aposts: [],
     };
   },
   methods: {
@@ -34,6 +37,19 @@ export default {
       // Logic to handle the edit button click
       console.log(`Edit post with ID ${postId}`);
     },
+  },
+  created() {
+    axios
+      .get(
+        "https://newsapi.org/v2/everything?q=tesla&from=2023-06-13&sortBy=publishedAt&apiKey=764514fa58124947a6ce7fd998e2d278"
+      )
+      .then((response) => {
+        console.log(response.data);
+        this.posts = response.data.articles;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   },
 };
 </script>
